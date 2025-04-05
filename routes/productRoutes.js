@@ -15,7 +15,7 @@ const {
 // Create Product
 router.post("/addproduct", protect, upload.single("image"), createProduct);
 
-// Get All Products
+// Get All Products with pagination
 router.get("/allproducts", getProducts);
 
 // Get Single Product

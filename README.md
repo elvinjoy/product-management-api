@@ -55,8 +55,8 @@ npm run dev
 
 ```
 ## 📬 Postman Collection
-Use this collection to test API endpoints.
-- 👉 Postman Link: **[Click Here](https://news-hub-backend.onrender.com)**
+postman collection is added inside the code 
+path: ../postman collection/Product Management API.postman_collection
 
 ##  🖼️ File Upload Info
 Upload key: image

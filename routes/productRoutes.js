@@ -8,14 +8,15 @@ const {
   getProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  filterAndSearchProducts 
 } = require("../controller/productController");
 
 // Create Product
-router.post("/", protect, upload.single("image"), createProduct);
+router.post("/addproduct", protect, upload.single("image"), createProduct);
 
 // Get All Products
-router.get("/", getProducts);
+router.get("/allproducts", getProducts);
 
 // Get Single Product
 router.get("/:id", getProductById);
@@ -25,5 +26,8 @@ router.put("/:id", protect, upload.single("image"), updateProduct);
 
 // Delete Product
 router.delete("/:id", protect, deleteProduct);
+
+// search and pagination
+// router.get("/searchfilter", filterAndSearchProducts);
 
 module.exports = router;

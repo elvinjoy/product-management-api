@@ -31,15 +31,32 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Get All Products
+// Get All Products with pagination
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.status(200).json({ success: true, data: products });
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find().skip(skip).limit(limit);
+    const total = await Product.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      data: products
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server error", error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message
+    });
   }
 };
+
 
 // Get Single Product
 exports.getProductById = async (req, res) => {
@@ -93,10 +110,14 @@ exports.deleteProduct = async (req, res) => {
       return res.status(403).json({ success: false, message: "Unauthorized to delete this product" });
     }
 
-    const imagePath = path.join(__dirname, "..", "uploads", product.image);
+    // Remove image
+    const imageName = product.image.split("/").pop();
+    const imagePath = path.join(__dirname, "..", "public", imageName);
     if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
 
-    await product.remove();
+    // Remove product
+    await product.deleteOne();
+
     res.status(200).json({ success: true, message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error", error: error.message });

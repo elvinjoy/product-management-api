@@ -56,7 +56,7 @@ npm run dev
 ```
 ## 📬 Postman Collection
 postman collection is added inside the code 
-path: ../postman collection/Product Management API.postman_collection
+- path : ../postman collection/Product Management API.postman_collection
 
 ##  🖼️ File Upload Info
 Upload key: image
